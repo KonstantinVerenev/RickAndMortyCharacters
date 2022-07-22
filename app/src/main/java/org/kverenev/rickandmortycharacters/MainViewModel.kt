@@ -1,15 +1,14 @@
 package org.kverenev.rickandmortycharacters
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.kverenev.rickandmortycharacters.network.ApiClient
 import org.kverenev.rickandmortycharacters.network.Character
-import org.kverenev.rickandmortycharacters.network.CharacterResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import java.lang.Exception
 
 class MainViewModel(private val repository: Repository = Repository(ApiClient.apiService)) :
     ViewModel() {
@@ -24,23 +23,13 @@ class MainViewModel(private val repository: Repository = Repository(ApiClient.ap
     private fun fetchCharacters() {
         _charactersLiveData.postValue(ScreenState.Loading(null))
 
-        val client = repository.getCharacters("1")
-        client.enqueue(object : Callback<CharacterResponse> {
-            override fun onResponse(
-                call: Call<CharacterResponse>,
-                response: Response<CharacterResponse>
-            ) {
-                if (response.isSuccessful) {
-                    _charactersLiveData.postValue(ScreenState.Success(response.body()?.result))
-                } else {
-                    _charactersLiveData.postValue(ScreenState.Error(response.code().toString()))
-                }
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val client = repository.getCharacters("1")
+                _charactersLiveData.postValue(ScreenState.Success(client.result))
+            } catch (e: Exception) {
+                _charactersLiveData.postValue(ScreenState.Error(e.message.toString()))
             }
-
-            override fun onFailure(call: Call<CharacterResponse>, t: Throwable) {
-                _charactersLiveData.postValue(ScreenState.Error(t.toString()))
-            }
-
-        })
+        }
     }
 }
