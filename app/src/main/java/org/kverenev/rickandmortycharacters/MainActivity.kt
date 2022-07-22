@@ -1,18 +1,13 @@
 package org.kverenev.rickandmortycharacters
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.viewModels
-import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import org.kverenev.rickandmortycharacters.databinding.ActivityMainBinding
-import org.kverenev.rickandmortycharacters.network.ApiClient
-import org.kverenev.rickandmortycharacters.network.CharacterResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.kverenev.rickandmortycharacters.network.Character
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,11 +20,33 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.charactersLiveData.observe(this) { charactersList ->
-            val adapter = MainAdapter(charactersList)
-            binding.rvCharacters.adapter = adapter
-            binding.rvCharacters.layoutManager =
-                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        viewModel.charactersLiveData.observe(this) { state ->
+            processCharactersResponse(state)
+        }
+    }
+
+    private fun processCharactersResponse(state: ScreenState<List<Character>?>) {
+        when (state) {
+            is ScreenState.Loading -> {
+                binding.rvCharacters.visibility = View.GONE
+                binding.progressBar.visibility = View.VISIBLE
+            }
+            is ScreenState.Success -> {
+                binding.rvCharacters.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
+
+                if (state.data != null) {
+                    val adapter = MainAdapter(state.data)
+                    binding.rvCharacters.adapter = adapter
+                    binding.rvCharacters.layoutManager =
+                        StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                }
+            }
+            is ScreenState.Error -> {
+                binding.rvCharacters.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
+                Snackbar.make(binding.root, state.message ?: "Error", Snackbar.LENGTH_LONG).show()
+            }
         }
     }
 }
