@@ -1,4 +1,4 @@
-package org.kverenev.rickandmortycharacters.network
+package org.kverenev.rickandmortycharacters.data
 
 import com.squareup.moshi.Json
 

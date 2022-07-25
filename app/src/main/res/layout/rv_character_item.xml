@@ -12,13 +12,14 @@
         android:padding="10dp">
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/character_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_background"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="image" />
 
         <TextView
             android:layout_marginTop="10dp"
@@ -29,9 +30,9 @@
             android:lines="3"
             android:textColor="@color/black"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="@id/image"
-            app:layout_constraintStart_toStartOf="@id/image"
-            app:layout_constraintTop_toBottomOf="@id/image"
+            app:layout_constraintEnd_toEndOf="@id/character_image"
+            app:layout_constraintStart_toStartOf="@id/character_image"
+            app:layout_constraintTop_toBottomOf="@id/character_image"
             tools:text="Name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

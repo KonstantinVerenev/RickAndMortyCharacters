@@ -1,4 +1,4 @@
-package org.kverenev.rickandmortycharacters
+package org.kverenev.rickandmortycharacters.presentation
 
 sealed class ScreenState<T>(
     val data: T? = null,

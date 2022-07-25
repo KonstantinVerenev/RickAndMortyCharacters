@@ -1,19 +1,23 @@
-package org.kverenev.rickandmortycharacters
+package org.kverenev.rickandmortycharacters.presentation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
-import org.kverenev.rickandmortycharacters.databinding.RvItemBinding
-import org.kverenev.rickandmortycharacters.network.Character
+import org.kverenev.rickandmortycharacters.data.Character
+import org.kverenev.rickandmortycharacters.databinding.RvCharacterItemBinding
 
-class MainAdapter(private val characterList: List<Character>) :
-    RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
+class CharacterListAdapter(
+    private val characterList: List<Character>,
+    private val onClickDetails: (id: String) -> Unit
+) :
+    RecyclerView.Adapter<CharacterListAdapter.MainViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = RvItemBinding.inflate(inflater, parent, false)
+        val binding = RvCharacterItemBinding.inflate(inflater, parent, false)
+
         return MainViewHolder(binding)
     }
 
@@ -25,14 +29,19 @@ class MainAdapter(private val characterList: List<Character>) :
         return characterList.size
     }
 
-    class MainViewHolder(private val binding: RvItemBinding) :
+    inner class MainViewHolder(private val binding: RvCharacterItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(character: Character) {
             binding.name.text = character.name
+
             if (character.image.isNotBlank()) {
-                binding.image.load(character.image) {
+                binding.characterImage.load(character.image) {
                     transformations(CircleCropTransformation())
                 }
+            }
+
+            binding.root.setOnClickListener {
+                onClickDetails(character.id.toString())
             }
         }
     }

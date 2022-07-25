@@ -1,4 +1,4 @@
-package org.kverenev.rickandmortycharacters
+package org.kverenev.rickandmortycharacters.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,15 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.kverenev.rickandmortycharacters.network.ApiClient
-import org.kverenev.rickandmortycharacters.network.Character
+import org.kverenev.rickandmortycharacters.data.Repository
+import org.kverenev.rickandmortycharacters.data.Character
 import java.lang.Exception
 
-class MainViewModel(private val repository: Repository = Repository(ApiClient.apiService)) :
+class CharacterListViewModel(private val repository: Repository) :
     ViewModel() {
 
-    private var _charactersLiveData = MutableLiveData<ScreenState<List<Character>?>>()
-    val charactersLiveData: LiveData<ScreenState<List<Character>?>> = _charactersLiveData
+    private var _charactersLiveData = MutableLiveData<ScreenState<List<Character>>>()
+    val charactersLiveData: LiveData<ScreenState<List<Character>>> = _charactersLiveData
 
     init {
         fetchCharacters()
