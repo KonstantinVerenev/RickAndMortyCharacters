@@ -2,7 +2,7 @@ package org.kverenev.rickandmortycharacters
 
 import android.app.Application
 import org.kverenev.rickandmortycharacters.data.Repository
-import org.kverenev.rickandmortycharacters.network.ApiClient
+import org.kverenev.rickandmortycharacters.data.network.ApiClient
 
 class App : Application() {
 

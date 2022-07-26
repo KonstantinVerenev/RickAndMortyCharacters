@@ -1,4 +1,4 @@
-package org.kverenev.rickandmortycharacters.presentation
+package org.kverenev.rickandmortycharacters.presentation.characterdetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +9,11 @@ import androidx.fragment.app.viewModels
 import coil.load
 import com.google.android.material.snackbar.Snackbar
 import org.kverenev.rickandmortycharacters.App
-import org.kverenev.rickandmortycharacters.data.CharacterDetails
 import org.kverenev.rickandmortycharacters.databinding.FragmentCharacterDetailsBinding
+import org.kverenev.rickandmortycharacters.domain.models.CharacterItem
+import org.kverenev.rickandmortycharacters.presentation.ScreenState
+import org.kverenev.rickandmortycharacters.presentation.ViewModelFactory
+import org.kverenev.rickandmortycharacters.presentation.navigator
 import kotlin.properties.Delegates
 
 class CharacterDetailsFragment : Fragment() {
@@ -58,7 +61,7 @@ class CharacterDetailsFragment : Fragment() {
         }
     }
 
-    private fun processCharacterDetailsResponse(state: ScreenState<CharacterDetails>) {
+    private fun processCharacterDetailsResponse(state: ScreenState<CharacterItem>) {
         when (state) {
             is ScreenState.Loading -> {
                 binding.descriptionGroup.visibility = View.GONE

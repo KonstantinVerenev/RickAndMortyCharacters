@@ -3,6 +3,8 @@ package org.kverenev.rickandmortycharacters.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.kverenev.rickandmortycharacters.App
+import org.kverenev.rickandmortycharacters.presentation.characterdetails.CharacterDetailsViewModels
+import org.kverenev.rickandmortycharacters.presentation.characterlist.CharacterListViewModel
 
 class ViewModelFactory(private val app: App, private val characterId: String? = null) :
     ViewModelProvider.Factory {

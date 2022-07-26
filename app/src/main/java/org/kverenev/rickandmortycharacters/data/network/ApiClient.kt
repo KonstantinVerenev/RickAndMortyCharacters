@@ -1,14 +1,9 @@
-package org.kverenev.rickandmortycharacters.network
+package org.kverenev.rickandmortycharacters.data.network
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import org.kverenev.rickandmortycharacters.data.CharacterDetails
-import org.kverenev.rickandmortycharacters.data.CharacterResponse
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
 
 object ApiClient {
 //    https://rickandmortyapi.com/api/character/?page=1
@@ -28,12 +23,4 @@ object ApiClient {
     val apiService: ApiService by lazy {
         retrofit.create(ApiService::class.java)
     }
-}
-
-interface ApiService {
-    @GET("character")
-    suspend fun fetchCharacters(@Query("page") page: String): CharacterResponse
-
-    @GET("character/{id}")
-    suspend fun fetchCharacterDetails(@Path("id") id: String): CharacterDetails
 }

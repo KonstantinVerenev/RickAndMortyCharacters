@@ -1,15 +1,15 @@
-package org.kverenev.rickandmortycharacters.presentation
+package org.kverenev.rickandmortycharacters.presentation.characterlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
-import org.kverenev.rickandmortycharacters.data.Character
+import org.kverenev.rickandmortycharacters.domain.models.CharacterItem
 import org.kverenev.rickandmortycharacters.databinding.RvCharacterItemBinding
 
 class CharacterListAdapter(
-    private val characterList: List<Character>,
+    private val characterList: List<CharacterItem>,
     private val onClickDetails: (id: String) -> Unit
 ) :
     RecyclerView.Adapter<CharacterListAdapter.MainViewHolder>() {
@@ -31,7 +31,7 @@ class CharacterListAdapter(
 
     inner class MainViewHolder(private val binding: RvCharacterItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(character: Character) {
+        fun bind(character: CharacterItem) {
             binding.name.text = character.name
 
             if (character.image.isNotBlank()) {
@@ -41,7 +41,7 @@ class CharacterListAdapter(
             }
 
             binding.root.setOnClickListener {
-                onClickDetails(character.id.toString())
+                onClickDetails(character.id)
             }
         }
     }

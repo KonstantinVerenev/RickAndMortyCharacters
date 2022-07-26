@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import org.kverenev.rickandmortycharacters.R
 import org.kverenev.rickandmortycharacters.databinding.ActivityMainBinding
+import org.kverenev.rickandmortycharacters.presentation.characterdetails.CharacterDetailsFragment
+import org.kverenev.rickandmortycharacters.presentation.characterlist.CharacterListFragment
 
 class MainActivity : AppCompatActivity(), Navigator {
 

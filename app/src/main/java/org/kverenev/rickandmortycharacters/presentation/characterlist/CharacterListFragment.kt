@@ -1,4 +1,4 @@
-package org.kverenev.rickandmortycharacters.presentation
+package org.kverenev.rickandmortycharacters.presentation.characterlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,10 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import org.kverenev.rickandmortycharacters.App
 import org.kverenev.rickandmortycharacters.databinding.FragmentCharacterListBinding
-import org.kverenev.rickandmortycharacters.data.Character
+import org.kverenev.rickandmortycharacters.domain.models.CharacterItem
+import org.kverenev.rickandmortycharacters.presentation.ScreenState
+import org.kverenev.rickandmortycharacters.presentation.ViewModelFactory
+import org.kverenev.rickandmortycharacters.presentation.navigator
 
 class CharacterListFragment : Fragment() /*, CharacterListAdapter.OnItemClickListener */ {
 
@@ -39,7 +42,7 @@ class CharacterListFragment : Fragment() /*, CharacterListAdapter.OnItemClickLis
         }
     }
 
-    private fun processCharactersResponse(state: ScreenState<List<Character>>) {
+    private fun processCharactersResponse(state: ScreenState<List<CharacterItem>>) {
         when (state) {
             is ScreenState.Loading -> {
                 binding.rvCharacters.visibility = View.GONE

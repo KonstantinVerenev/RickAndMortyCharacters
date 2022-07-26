@@ -1,8 +1,8 @@
-package org.kverenev.rickandmortycharacters.data
+package org.kverenev.rickandmortycharacters.data.network.models
 
 import com.squareup.moshi.Json
 
-data class CharacterResponse(
+data class CharactersList(
     @Json(name = "results")
     val result: List<Character>
 )

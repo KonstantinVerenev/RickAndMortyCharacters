@@ -1,4 +1,4 @@
-package org.kverenev.rickandmortycharacters.presentation
+package org.kverenev.rickandmortycharacters.presentation.characterdetails
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,17 +6,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.kverenev.rickandmortycharacters.data.CharacterDetails
 import org.kverenev.rickandmortycharacters.data.Repository
+import org.kverenev.rickandmortycharacters.domain.models.CharacterItem
+import org.kverenev.rickandmortycharacters.domain.usecases.GetCharacterDetailsUseCase
+import org.kverenev.rickandmortycharacters.presentation.ScreenState
 import java.lang.Exception
 
 class CharacterDetailsViewModels(
-    private val repository: Repository,
+    repository: Repository,
     private val characterId: String
 ) : ViewModel() {
 
-    private var _characterDetailsLiveData = MutableLiveData<ScreenState<CharacterDetails>>()
-    val characterDetailsLiveData: LiveData<ScreenState<CharacterDetails>> =
+    private val getCharacterDetailsUseCase =  GetCharacterDetailsUseCase(repository)
+
+    private var _characterDetailsLiveData = MutableLiveData<ScreenState<CharacterItem>>()
+    val characterDetailsLiveData: LiveData<ScreenState<CharacterItem>> =
         _characterDetailsLiveData
 
     init {
@@ -28,8 +32,8 @@ class CharacterDetailsViewModels(
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val client = repository.getCharacterDetails(characterId)
-                _characterDetailsLiveData.postValue(ScreenState.Success(client))
+                val character = getCharacterDetailsUseCase.execute(characterId)
+                _characterDetailsLiveData.postValue(ScreenState.Success(character))
             } catch (e: Exception) {
                 _characterDetailsLiveData.postValue(ScreenState.Error(e.message.toString()))
             }
