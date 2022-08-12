@@ -8,6 +8,16 @@ import org.kverenev.rickandmortycharacters.domain.models.CharacterItem
 
 class Repository(private val apiService: ApiService) : RepositoryInterface {
 
+
+    /**
+     *  1! Слишком общие названия классов или переменных
+     */
+
+    /**
+     *  3! Можно попробовать переписать suspend на RxJava
+     */
+
+
     override suspend fun getCharacters(page: String): List<CharacterItem> {
         delay(1000)
         return apiService.fetchCharacters(page).result.map { character -> mapToDomain(character) }
@@ -18,6 +28,10 @@ class Repository(private val apiService: ApiService) : RepositoryInterface {
         val character = apiService.fetchCharacterDetails(id)
         return mapToDomain(character)
     }
+
+    /**
+     *  2! Лучше в DTO класс character
+     */
 
     private fun mapToDomain(character: Character): CharacterItem {
         return CharacterItem(

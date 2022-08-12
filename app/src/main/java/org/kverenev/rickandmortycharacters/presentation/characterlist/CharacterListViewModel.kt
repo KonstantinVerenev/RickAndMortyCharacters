@@ -17,6 +17,9 @@ class CharacterListViewModel(repository: Repository) :
 
     private val getCharactersUseCase = GetCharactersUseCase(repository)
 
+    /**
+     *  6! Тут можно RxJava или Flow вместе Live Data
+     */
     private var _charactersLiveData = MutableLiveData<ScreenState<List<CharacterItem>>>()
     val charactersLiveData: LiveData<ScreenState<List<CharacterItem>>> = _charactersLiveData
 

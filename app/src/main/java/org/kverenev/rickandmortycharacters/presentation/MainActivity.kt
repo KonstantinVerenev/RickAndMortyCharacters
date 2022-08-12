@@ -10,6 +10,9 @@ import org.kverenev.rickandmortycharacters.presentation.characterlist.CharacterL
 
 class MainActivity : AppCompatActivity(), Navigator {
 
+    /**
+     *  6! лучше через by lazy {} чтобы val
+     */
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +30,9 @@ class MainActivity : AppCompatActivity(), Navigator {
         }
     }
 
+    /**
+     *  7! Можно переписать навигацию на роутер (цицерон), паттерн роутер с фрагмент менеджером
+     */
     override fun showDetailsScreen(characterId: String) {
         launchFragment(CharacterDetailsFragment.newInstance(characterId))
     }

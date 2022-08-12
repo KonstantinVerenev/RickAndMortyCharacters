@@ -13,3 +13,7 @@ interface ApiService {
     @GET("character/{id}")
     suspend fun fetchCharacterDetails(@Path("id") id: String): Character
 }
+
+/**
+ *  3! Есть ли какойто put или post
+ */

@@ -16,3 +16,7 @@ data class Character(
     @Json(name = "status")
     val status: String
 )
+
+/**
+ * 2! Сюда мап
+ */

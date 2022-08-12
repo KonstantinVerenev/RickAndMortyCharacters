@@ -5,6 +5,14 @@ import org.kverenev.rickandmortycharacters.domain.repositories.RepositoryInterfa
 
 class GetCharacterDetailsUseCase(private val repository: RepositoryInterface) {
 
+    /**
+     *  4! Тут уже депенденси инжекшн
+     */
+
+    /**
+     *  5! Возможно тутможно добавить интерфейс общего useCase и частные имплементации
+     */
+
     suspend fun execute(id: String): CharacterItem {
         return repository.getCharacterDetails(id)
     }
